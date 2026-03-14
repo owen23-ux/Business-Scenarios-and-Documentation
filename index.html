@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azure Cloud Architecture Scenarios - Complete Documentation Guide</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            padding: 40px;
+        }
+
+        /* Main Container - This ensures proper PDF rendering */
+        .pdf-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 50px;
+            page-break-inside: avoid;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 36px;
+            color: #0066b3; /* Azure Blue */
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #0066b3;
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 5px solid #0066b3;
+        }
+
+        h3 {
+            font-size: 22px;
+            color: #34495e;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #bdc3c7;
+        }
+
+        h4 {
+            font-size: 18px;
+            color: #0066b3;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Header Styles */
+        .title-page {
+            text-align: center;
+            margin-bottom: 50px;
+            page-break-after: avoid;
+        }
+
+        .title-page h1 {
+            font-size: 48px;
+            border-bottom: none;
+            margin-top: 100px;
+        }
+
+        .title-page .subtitle {
+            font-size: 20px;
+            color: #7f8c8d;
+            margin-top: 20px;
+        }
+
+        .title-page .date {
+            margin-top: 50px;
+            color: #95a5a6;
+        }
+
+        .author-info {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 30px 0;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background-color: #f8f9fa;
+            padding: 30px;
+            border-radius: 5px;
+            margin: 40px 0;
+            page-break-after: always;
+        }
+
+        .toc h2 {
+            border-left: none;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .toc ul {
+            list-style-type: none;
+            columns: 2;
+            column-gap: 40px;
+        }
+
+        .toc li {
+            margin-bottom: 12px;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            text-decoration: none;
+            color: #0066b3;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        /* Scenario Cards */
+        .scenario-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            page-break-inside: avoid;
+        }
+
+        .scenario-header {
+            background: linear-gradient(135deg, #0066b3, #0099ff);
+            color: white;
+            padding: 15px 25px;
+            margin: -25px -25px 20px -25px;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .scenario-header h3 {
+            color: white;
+            border-bottom: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .scenario-header .company-tag {
+            display: inline-block;
+            background-color: rgba(255,255,255,0.2);
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #0066b3;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        /* Resource Tags */
+        .resource-tag {
+            display: inline-block;
+            background-color: #e1f0fa;
+            color: #0066b3;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            margin: 2px;
+            border: 1px solid #0066b3;
+        }
+
+        .resource-category {
+            display: inline-block;
+            background-color: #2c3e50;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+
+        /* Architecture Diagrams - ASCII/Text-based for PDF compatibility */
+        .diagram-ascii {
+            background-color: #2d2d2d;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-size: 12px;
+            line-height: 1.2;
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        /* Documentation Templates */
+        .doc-template {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0066b3;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .checklist {
+            background-color: #fff9e6;
+            border: 1px solid #ffd966;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .checklist li {
+            list-style-type: none;
+            margin-bottom: 10px;
+        }
+
+        .checklist li:before {
+            content: "☐ ";
+            color: #0066b3;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        /* Best Practice Boxes */
+        .best-practice {
+            background-color: #e8f4f8;
+            border: 1px solid #0066b3;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .tip-box {
+            background-color: #d4edda;
+            border: 1px solid #28a745;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        /* Footer and Page Numbers */
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #dee2e6;
+            text-align: center;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        /* Print-specific styles for PDF generation */
+        @media print {
+            body {
+                background-color: white;
+                padding: 0;
+            }
+            
+            .pdf-container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            
+            .scenario-card {
+                break-inside: avoid;
+            }
+            
+            h1, h2, h3, h4 {
+                break-after: avoid;
+            }
+            
+            .toc {
+                break-after: always;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .text-azure { color: #0066b3; }
+        .bg-light { background-color: #f8f9fa; }
+        .mt-30 { margin-top: 30px; }
+        .mb-20 { margin-bottom: 20px; }
+        .p-20 { padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="pdf-container">
+        <!-- Title Page -->
+        <div class="title-page">
+            <h1>AZURE CLOUD ARCHITECTURE<br>SCENARIOS & DOCUMENTATION</h1>
+            <p class="subtitle">Complete Guide to Azure Compute and Networking Services<br>Based on AZ-900 Curriculum</p>
+            <div class="author-info">
+                <p><strong>Author:</strong> Azure Solutions Architect</p>
+                <p><strong>Prepared For:</strong> Digital Transformation Projects</p>
+                <p><strong>Version:</strong> 1.0</p>
+            </div>
+            <p class="date">March 14, 2026</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#scenario1">1. Digital Designs - The Traditional Migration</a></li>
+                <li><a href="#scenario2">2. EduStream - The Serverless Startup</a></li>
+                <li><a href="#scenario3">3. SecureSave - The Regulated Financial Firm</a></li>
+                <li><a href="#scenario4">4. ViralVids - The Media Streaming Platform</a></li>
+                <li><a href="#scenario5">5. GlobalCorp - The Enterprise Hybrid Cloud</a></li>
+                <li><a href="#documentation">6. How to Document Azure Resources</a></li>
+                <li><a href="#templates">7. Documentation Templates</a></li>
+                <li><a href="#checklists">8. Implementation Checklists</a></li>
+                <li><a href="#bestpractices">9. Best Practices & Guidelines</a></li>
+                <li><a href="#glossary">10. AZ-900 Resource Glossary</a></li>
+            </ul>
+        </div>
+
+        <!-- SCENARIO 1: Digital Designs -->
+        <section id="scenario1">
+            <h2>Scenario 1: The Architectural Firm - "Digital Designs"</h2>
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h3>Digital Designs: Traditional "Lift and Shift" Migration</h3>
+                    <span class="company-tag">Industry: Architecture & Engineering | Employees: 200</span>
+                </div>
+
+                <h4>📋 Business Challenge</h4>
+                <p>A mid-sized architectural firm faces infrastructure failures with on-premises servers. Issues include overheating, slow 3D rendering, poor remote access, and no disaster recovery plan.</p>
+
+                <h4>🎯 Solution Architecture</h4>
+                <div class="diagram-ascii">
+                    ┌─────────────────────────────────────────────────────────────┐
+                    │                    DIGITAL DESIGNS AZURE ARCHITECTURE       │
+                    └─────────────────────────────────────────────────────────────┘
+                    
+                    [Internet] ────┬─── [VPN Gateway] ────┐
+                                   │                       │
+                              [Office Firewall]       [Remote Workers]
+                                   │                       │
+                    ┌──────────────┴───────────────────────┴──────────────┐
+                    │            DigitalDesigns-VNet (10.0.0.0/16)        │
+                    │  ┌────────────────────────────────────────────┐     │
+                    │  │           GatewaySubnet                     │     │
+                    │  │         [VPN Gateway]                      │     │
+                    │  └────────────────────────────────────────────┘     │
+                    │                                                      │
+                    │  ┌──────────────┐  ┌──────────────┐  ┌──────────┐  │
+                    │  │ Web-Subnet   │  │ App-Subnet   │  │Data-Subnet│  │
+                    │  │  10.0.1.0/24 │  │ 10.0.2.0/24  │  │10.0.3.0/24│  │
+                    │  │              │  │              │  │          │  │
+                    │  │  [NSG Rules] │  │  [NSG Rules] │  │ [NSG Rules] │
+                    │  │   Allow HTTP │  │  Allow from  │  │  Deny All  │
+                    │  │   HTTPS only │  │  Web-Subnet  │  │  Except App│
+                    │  └──────┬───────┘  └──────┬───────┘  └─────┬────┘  │
+                    │         │                  │                │       │
+                    │    [Web VM]          [App VMs]─────[Load Balancer]  │
+                    │                      (2x B2s)          │            │
+                    │    [Public IP]──────────┘              │            │
+                    │                                         │            │
+                    │                              [SQL Database]         │
+                    └─────────────────────────────────────────────────────┘
+                </div>
+
+                <h4>🛠️ Azure Resources Deployed</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource Type</th>
+                            <th>Resource Name</th>
+                            <th>Configuration</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>DigitalDesigns-VNet</td>
+                            <td>Address Space: 10.0.0.0/16</td>
+                            <td>Isolated network for all resources</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>Web-Subnet</td>
+                            <td>10.0.1.0/24</td>
+                            <td>Public-facing web servers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>App-Subnet</td>
+                            <td>10.0.2.0/24</td>
+                            <td>Application tier VMs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>Data-Subnet</td>
+                            <td>10.0.3.0/24</td>
+                            <td>Database servers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>App-VM-01, App-VM-02</td>
+                            <td>Standard_B2s (2 vCPUs, 4GB RAM)</td>
+                            <td>Project management and wiki servers</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>Render-VM-Pool</td>
+                            <td>Standard_F72s_v2 (Compute Optimized)</td>
+                            <td>3D rendering workloads</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>NSG-Web</td>
+                            <td>Allow HTTP/HTTPS from Internet</td>
+                            <td>Web tier firewall</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>NSG-Data</td>
+                            <td>Allow only from App-Subnet</td>
+                            <td>Database protection</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>App-LoadBalancer</td>
+                            <td>Standard SKU, Internal</td>
+                            <td>Distribute traffic across App VMs</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>Corporate-VPN-Gateway</td>
+                            <td>Site-to-Site + Point-to-Site</td>
+                            <td>Secure remote connectivity</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>📊 Resource Summary</h4>
+                <p>
+                    <span class="resource-tag">Virtual Network</span>
+                    <span class="resource-tag">Subnets</span>
+                    <span class="resource-tag">Virtual Machines (B-series)</span>
+                    <span class="resource-tag">Virtual Machines (F-series)</span>
+                    <span class="resource-tag">Network Security Groups</span>
+                    <span class="resource-tag">Load Balancer</span>
+                    <span class="resource-tag">VPN Gateway</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- SCENARIO 2: EduStream -->
+        <section id="scenario2">
+            <h2>Scenario 2: The E-Learning Startup - "EduStream"</h2>
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h3>EduStream: Modern Serverless Platform</h3>
+                    <span class="company-tag">Industry: E-Learning | Focus: Global Scale, Minimal Cost</span>
+                </div>
+
+                <h4>📋 Business Challenge</h4>
+                <p>A startup needs to launch a global online course platform with unpredictable traffic patterns (spikes during live classes). They want to minimize costs and focus on code, not server management.</p>
+
+                <h4>🎯 Solution Architecture</h4>
+                <div class="diagram-ascii">
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │                    EDUSTREAM SERVERLESS ARCHITECTURE                │
+    └─────────────────────────────────────────────────────────────────────┘
+
+    [Global Users] ────→ [Azure Front Door] ────────────────────┐
+                              (Global Load Balancer)            │
+                                    │                           │
+                    ┌───────────────┴───────────────┐          │
+                    ▼                               ▼          │
+            [Container Instances]           [Azure Functions]   │
+            (Course Application)            (Enrollment,       │
+                                           Emails, Quizzes)    │
+                    │                               │          │
+                    └───────────────┬───────────────┘          │
+                                    ▼                          ▼
+                          [Azure SQL Database]        [Storage Account]
+                                                       (Static Website + 
+                                                        Course Videos)
+                </div>
+
+                <h4>🛠️ Azure Resources Deployed</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource Type</th>
+                            <th>Resource Name</th>
+                            <th>Configuration</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>edu-app-container</td>
+                            <td>ACI, Linux Container</td>
+                            <td>Course application hosting</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>edu-functions-app</td>
+                            <td>Consumption Plan, JavaScript</td>
+                            <td>Serverless backend processing</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>edu-frontdoor</td>
+                            <td>Global SKU, WAF Policy</td>
+                            <td>Global load balancing & security</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Storage</span></td>
+                            <td>edustreamstorage</td>
+                            <td>Static website enabled, Hot tier</td>
+                            <td>Frontend website files</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>edu-vnet-integration</td>
+                            <td>VNet integrated with Functions</td>
+                            <td>Secure backend connectivity</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>📊 Resource Summary</h4>
+                <p>
+                    <span class="resource-tag">Container Instances</span>
+                    <span class="resource-tag">Azure Functions</span>
+                    <span class="resource-tag">Azure Front Door</span>
+                    <span class="resource-tag">Storage Account</span>
+                    <span class="resource-tag">Virtual Network Integration</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- SCENARIO 3: SecureSave -->
+        <section id="scenario3">
+            <h2>Scenario 3: The Financial Services Firm - "SecureSave"</h2>
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h3>SecureSave: Regulated, Stateful Application Migration</h3>
+                    <span class="company-tag">Industry: Financial Services | Compliance: PCI-DSS, HIPAA</span>
+                </div>
+
+                <h4>📋 Business Challenge</h4>
+                <p>A financial firm needs to migrate a sensitive, stateful application to Azure with strict compliance requirements. No code changes allowed, and zero downtime is mandatory.</p>
+
+                <h4>🛠️ Azure Resources Deployed</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource Type</th>
+                            <th>Resource Name</th>
+                            <th>Configuration</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>secure-app-vm-1,2,3</td>
+                            <td>Standard_D4s_v3, Availability Set</td>
+                            <td>Stateful application hosting</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>secure-as</td>
+                            <td>3 Fault Domains, 5 Update Domains</td>
+                            <td>High availability across racks</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>secure-lb</td>
+                            <td>Standard SKU, Session Persistence</td>
+                            <td>Load balancer with sticky sessions</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>secure-nsg-app</td>
+                            <td>Allow only corporate IPs</td>
+                            <td>Restrict access to known sources</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>secure-storage-endpoint</td>
+                            <td>Service Endpoint enabled</td>
+                            <td>Private connection to Storage</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>📊 Resource Summary</h4>
+                <p>
+                    <span class="resource-tag">Virtual Machines (D-series)</span>
+                    <span class="resource-tag">Availability Set</span>
+                    <span class="resource-tag">Load Balancer with Session Persistence</span>
+                    <span class="resource-tag">Network Security Groups</span>
+                    <span class="resource-tag">Service Endpoints</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- SCENARIO 4: ViralVids -->
+        <section id="scenario4">
+            <h2>Scenario 4: The Media Company - "ViralVids"</h2>
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h3>ViralVids: Global Media Streaming Platform</h3>
+                    <span class="company-tag">Industry: Media & Entertainment | Focus: Content Delivery</span>
+                </div>
+
+                <h4>📋 Business Challenge</h4>
+                <p>A media company needs to host massive video archives and stream content to millions of users worldwide, requiring inexpensive storage and fast global delivery.</p>
+
+                <h4>🎯 Solution Architecture</h4>
+                <div class="diagram-ascii">
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │                     VIRALVIDS CONTENT DELIVERY                      │
+    └─────────────────────────────────────────────────────────────────────┘
+
+    [User in Paris] ──→ [CDN POP Europe] ──┐
+    [User in Tokyo] ──→ [CDN POP Asia]  ──┤
+    [User in NY]   ──→ [CDN POP US]    ──┼──→ [Azure CDN]
+                                             │
+                                    ┌────────┴────────┐
+                                    ▼                 ▼
+                          [Blob Storage - Videos] [Static Website]
+                                   (Origin)          ($web)
+                </div>
+
+                <h4>🛠️ Azure Resources Deployed</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource Type</th>
+                            <th>Resource Name</th>
+                            <th>Configuration</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="resource-category">Storage</span></td>
+                            <td>viralvidsstorage</td>
+                            <td>BlobStorage, Hot tier, Static website</td>
+                            <td>Video archive and frontend hosting</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>viralvids-cdn</td>
+                            <td>Verizon Premium, Global</td>
+                            <td>Content caching and delivery</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Compute</span></td>
+                            <td>viral-api-functions</td>
+                            <td>Premium Plan, JavaScript</td>
+                            <td>Backend API for dynamic features</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>📊 Resource Summary</h4>
+                <p>
+                    <span class="resource-tag">Blob Storage</span>
+                    <span class="resource-tag">Static Website Hosting</span>
+                    <span class="resource-tag">Content Delivery Network (CDN)</span>
+                    <span class="resource-tag">Azure Functions</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- SCENARIO 5: GlobalCorp -->
+        <section id="scenario5">
+            <h2>Scenario 5: The Multinational Corporation - "GlobalCorp"</h2>
+            <div class="scenario-card">
+                <div class="scenario-header">
+                    <h3>GlobalCorp: Enterprise Hybrid Cloud</h3>
+                    <span class="company-tag">Industry: Multinational | Offices: NY, London, Singapore</span>
+                </div>
+
+                <h4>📋 Business Challenge</h4>
+                <p>A global corporation needs to connect offices worldwide to Azure using private, high-speed connections, treating Azure as an extension of their corporate network.</p>
+
+                <h4>🎯 Solution Architecture</h4>
+                <div class="diagram-ascii">
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │                    GLOBALCORP HYBRID NETWORK                        │
+    └─────────────────────────────────────────────────────────────────────┘
+
+    [NY Office] ───┐
+    [London Office]─┼──→ [ExpressRoute] ───┐
+    [Singapore] ───┘                        │
+                                             ▼
+                                  [Azure Firewall]
+                                          │
+                        ┌─────────────────┴─────────────────┐
+                        ▼                                   ▼
+                [Hub VNet - East US] ─────VNet Peering───── [Spoke VNet - EU West]
+                (10.0.0.0/16)                              (10.1.0.0/16)
+                </div>
+
+                <h4>🛠️ Azure Resources Deployed</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Resource Type</th>
+                            <th>Resource Name</th>
+                            <th>Configuration</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>GlobalCorp-Hub-VNet</td>
+                            <td>10.0.0.0/16</td>
+                            <td>Central hub network</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>GlobalCorp-Spoke-EU</td>
+                            <td>10.1.0.0/16</td>
+                            <td>European workload network</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>GlobalCorp-ExpressRoute</td>
+                            <td>10 Gbps, Premium SKU</td>
+                            <td>Private connection to on-premises</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>Hub-to-EU-Peering</td>
+                            <td>VNet Peering, Gateway Transit</td>
+                            <td>Connect hub and spoke networks</td>
+                        </tr>
+                        <tr>
+                            <td><span class="resource-category">Networking</span></td>
+                            <td>GlobalCorp-Firewall</td>
+                            <td>Standard SKU, Forced Tunneling</td>
+                            <td>Central traffic inspection</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>📊 Resource Summary</h4>
+                <p>
+                    <span class="resource-tag">Virtual Network</span>
+                    <span class="resource-tag">ExpressRoute</span>
+                    <span class="resource-tag">VNet Peering</span>
+                    <span class="resource-tag">Azure Firewall</span>
+                </p>
+            </div>
+        </section>
+
+        <!-- DOCUMENTATION GUIDE -->
+        <section id="documentation">
+            <h2>How to Document Azure Resources</h2>
+            
+            <div class="best-practice">
+                <h3>📝 The Importance of Cloud Documentation</h3>
+                <p>Proper documentation is critical for operational success, troubleshooting, compliance, and knowledge transfer. Below is a comprehensive guide on documenting Azure resources effectively.</p>
+            </div>
+
+            <h3>1. Resource Naming Conventions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Resource Type</th>
+                        <th>Naming Pattern</th>
+                        <th>Example</th>
+                        <th>Max Length</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Resource Group</td>
+                        <td>rg-{app}-{env}-{region}</td>
+                        <td>rg-edu-prod-eastus</td>
+                        <td>90</td>
+                    </tr>
+                    <tr>
+                        <td>Virtual Network</td>
+                        <td>vnet-{app}-{env}-{region}</td>
+                        <td>vnet-digitaldesigns-prod-eastus</td>
+                        <td>64</td>
+                    </tr>
+                    <tr>
+                        <td>Subnet</td>
+                        <td>snet-{tier}-{env}</td>
+                        <td>snet-web-prod</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>Virtual Machine</td>
+                        <td>vm{app}{tier}{number}</td>
+                        <td>vmeduweb01</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Storage Account</td>
+                        <td>{app}{env}{number}</td>
+                        <td>edustreamprod001</td>
+                        <td>24 (lowercase only)</td>
+                    </tr>
+                    <tr>
+                        <td>Load Balancer</td>
+                        <td>lb-{app}-{tier}-{env}</td>
+                        <td>lb-edu-web-prod</td>
+                        <td>80</td>
+                    </tr>
+                    <tr>
+                        <td>Network Security Group</td>
+                        <td>nsg-{tier}-{env}</td>
+                        <td>nsg-web-prod</td>
+                        <td>80</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>2. Required Documentation Sections</h3>
+            
+            <div class="doc-template">
+                <h4>📋 Resource Documentation Template</h4>
+                <pre>
+# RESOURCE DOCUMENTATION TEMPLATE
+
+## 1. GENERAL INFORMATION
+- **Resource Name:** 
+- **Resource Type:** 
+- **Resource Group:** 
+- **Location:** 
+- **Creation Date:** 
+- **Owner/Team:** 
+- **Cost Center:** 
+
+## 2. CONFIGURATION DETAILS
+- **SKU/Tier:** 
+- **Size/Capacity:** 
+- **OS Version (if applicable):** 
+- **Network Configuration:** 
+- **Security Settings:** 
+
+## 3. TAGS
+- Environment: (Production/Development/Test)
+- Application: 
+- Criticality: (High/Medium/Low)
+- Compliance: (PCI/HIPAA/SOX/None)
+
+## 4. DEPENDENCIES
+- Depends On: 
+- Dependent Resources: 
+
+## 5. ACCESS CONTROL (IAM)
+- Owners: 
+- Contributors: 
+- Readers: 
+- Special Roles: 
+
+## 6. BACKUP & DISASTER RECOVERY
+- Backup Policy: 
+- Retention Period: 
+- Recovery Services Vault: 
+- RPO/RTO: 
+
+## 7. MONITORING & ALERTING
+- Metrics Tracked: 
+- Alert Rules: 
+- Action Groups: 
+- Log Analytics Workspace: 
+
+## 8. COST INFORMATION
+- Estimated Monthly Cost: 
+- Billing Code: 
+- Optimization Opportunities: 
+
+## 9. NOTES
+- Special Considerations: 
+- Known Issues: 
+- Maintenance Windows: 
+                </pre>
+            </div>
+
+            <h3>3. IP Address Planning Documentation</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>VNet/Subnet</th>
+                        <th>Address Space</th>
+                        <th>Usable IPs</th>
+                        <th>Purpose</th>
+                        <th>Resources Deployed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hub-VNet</td>
+                        <td>10.0.0.0/16</td>
+                        <td>65,536</td>
+                        <td>Central Hub</td>
+                        <td>Firewall, Gateway</td>
+                    </tr>
+                    <tr>
+                        <td>GatewaySubnet</td>
+                        <td>10.0.0.0/27</td>
+                        <td>32</td>
+                        <td>VPN/ExpressRoute Gateway</td>
+                        <td>VPN Gateway</td>
+                    </tr>
+                    <tr>
+                        <td>AzureFirewallSubnet</td>
+                        <td>10.0.1.0/26</td>
+                        <td>64</td>
+                        <td>Azure Firewall</td>
+                        <td>Firewall</td>
+                    </tr>
+                    <tr>
+                        <td>Web-Subnet</td>
+                        <td>10.0.2.0/24</td>
+                        <td>256</td>
+                        <td>Web Tier</td>
+                        <td>Web VMs, Load Balancer</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>4. Network Security Group (NSG) Documentation</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>NSG Name</th>
+                        <th>Priority</th>
+                        <th>Name</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Protocol</th>
+                        <th>Action</th>
+                        <th>Justification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>nsg-web-prod</td>
+                        <td>100</td>
+                        <td>Allow_HTTP_Internet</td>
+                        <td>Internet</td>
+                        <td>10.0.2.0/24</td>
+                        <td>TCP 80</td>
+                        <td>Allow</td>
+                        <td>Allow public web traffic</td>
+                    </tr>
+                    <tr>
+                        <td>nsg-web-prod</td>
+                        <td>110</td>
+                        <td>Allow_HTTPS_Internet</td>
+                        <td>Internet</td>
+                        <td>10.0.2.0/24</td>
+                        <td>TCP 443</td>
+                        <td>Allow</td>
+                        <td>Allow secure web traffic</td>
+                    </tr>
+                    <tr>
+                        <td>nsg-web-prod</td>
+                        <td>4000</td>
+                        <td>Deny_All_Other</td>
+                        <td>*</td>
+                        <td>*</td>
+                        <td>*</td>
+                        <td>Deny</td>
+                        <td>Default deny all other traffic</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- CHECKLISTS -->
+        <section id="checklists">
+            <h2>Implementation Checklists</h2>
+            
+            <div class="checklist">
+                <h3>✅ Virtual Network Deployment Checklist</h3>
+                <ul>
+                    <li>Define address space that doesn't overlap with on-premises networks</li>
+                    <li>Create subnets with appropriate sizes (consider future growth)</li>
+                    <li>Reserve GatewaySubnet for VPN/ExpressRoute gateways</li>
+                    <li>Reserve AzureFirewallSubnet for Azure Firewall</li>
+                    <li>Enable DDoS Protection Standard for production VNets</li>
+                    <li>Configure DNS settings (custom or Azure-provided)</li>
+                    <li>Document all IP address ranges</li>
+                    <li>Plan for VNet peering requirements</li>
+                    <li>Consider service endpoints for PaaS services</li>
+                    <li>Apply tags for cost tracking</li>
+                </ul>
+            </div>
+
+            <div class="checklist">
+                <h3>✅ Virtual Machine Deployment Checklist</h3>
+                <ul>
+                    <li>Select appropriate VM size based on workload requirements</li>
+                    <li>Choose correct storage type (Premium SSD, Standard SSD, or HDD)</li>
+                    <li>Place VM in correct Availability Set or Zone</li>
+                    <li>Apply Network Security Group to VM NIC</li>
+                    <li>Enable boot diagnostics</li>
+                    <li>Configure auto-shutdown for development VMs</li>
+                    <li>Implement Azure Backup</li>
+                    <li>Enable Azure Monitor for VMs</li>
+                    <li>Apply managed identity for secure access</li>
+                    <li>Tag VM for cost tracking and management</li>
+                </ul>
+            </div>
+
+            <div class="checklist">
+                <h3>✅ Load Balancer Deployment Checklist</h3>
+                <ul>
+                    <li>Choose correct SKU (Basic vs Standard)</li>
+                    <li>Select public vs internal load balancer</li>
+                    <li>Configure backend pool with VMs or VMSS</li>
+                    <li>Define health probes (HTTP, TCP, or HTTPS)</li>
+                    <li>Configure load balancing rules</li>
+                    <li>Set up session persistence if needed</li>
+                    <li>Configure outbound rules for public load balancers</li>
+                    <li>Enable diagnostic logs</li>
+                    <li>Integrate with Azure Monitor</li>
+                    <li>Document frontend IP configurations</li>
+                </ul>
+            </div>
+
+            <div class="checklist">
+                <h3>✅ Network Security Group (NSG) Checklist</h3>
+                <ul>
+                    <li>Apply NSGs at subnet level for broad protection</li>
+                    <li>Apply NSGs at NIC level for fine-grained control</li>
+                    <li>Follow least privilege principle (deny all by default)</li>
+                    <li>Use service tags for Azure services</li>
+                    <li>Document all rules with descriptions</li>
+                    <li>Review NSG flow logs regularly</li>
+                    <li>Test rules with NSG flow logs</li>
+                    <li>Implement just-in-time VM access for management</li>
+                    <li>Use application security groups for logical grouping</li>
+                    <li>Regularly audit and remove unused rules</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- BEST PRACTICES -->
+        <section id="bestpractices">
+            <h2>Best Practices & Guidelines</h2>
+            
+            <div class="best-practice">
+                <h3>🎯 Tagging Strategy</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tag Name</th>
+                            <th>Required</th>
+                            <th>Example Values</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Environment</td>
+                            <td>Yes</td>
+                            <td>Prod, Dev, Test, QA, Staging</td>
+                            <td>Identify deployment environment</td>
+                        </tr>
+                        <tr>
+                            <td>Application</td>
+                            <td>Yes</td>
+                            <td>DigitalDesigns, EduStream, SecureSave</td>
+                            <td>Group resources by application</td>
+                        </tr>
+                        <tr>
+                            <td>CostCenter</td>
+                            <td>Yes</td>
+                            <td>CC-12345, Marketing-IT, R&D</td>
+                            <td>Chargeback and cost allocation</td>
+                        </tr>
+                        <tr>
+                            <td>Owner</td>
+                            <td>Yes</td>
+                            <td>team-web, john.doe@company.com</td>
+                            <td>Point of contact for resource</td>
+                        </tr>
+                        <tr>
+                            <td>Criticality</td>
+                            <td>Yes</td>
+                            <td>High, Medium, Low</td>
+                            <td>Determine support and backup levels</td>
+                        </tr>
+                        <tr>
+                            <td>Compliance</td>
+                            <td>Conditional</td>
+                            <td>PCI, HIPAA, SOX, GDPR</td>
+                            <td>Track compliance requirements</td>
+                        </tr>
+                        <tr>
+                            <td>MaintenanceWindow</td>
+                            <td>No</td>
+                            <td>Sunday-2AM-EST, Weekends</td>
+                            <td>Schedule maintenance activities</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning-box">
+                <h3>⚠️ Common Pitfalls to Avoid</h3>
+                <ul>
+                    <li><strong>IP Address Overlap:</strong> Never use overlapping IP ranges with on-premises networks for hybrid connections</li>
+                    <li><strong>Missing NSGs:</strong> Always apply NSGs; don't leave subnets unprotected</li>
+                    <li><strong>Default Passwords:</strong> Never use default credentials on VMs</li>
+                    <li><strong>Public Exposure:</strong> Avoid exposing management ports (RDP/SSH) to the internet</li>
+                    <li><strong>No Backups:</strong> Always configure backups for production data</li>
+                    <li><strong>Single Point of Failure:</strong> Use availability sets/zones for critical VMs</li>
+                    <li><strong>No Monitoring:</strong> Always enable Azure Monitor and alerts</li>
+                    <li><strong>Orphaned Resources:</strong> Clean up unused resources to avoid costs</li>
+                </ul>
+            </div>
+
+            <div class="tip-box">
+                <h3>💡 Cost Optimization Tips</h3>
+                <ul>
+                    <li><strong>Right-size VMs:</strong> Use Azure Advisor recommendations to resize underutilized VMs</li>
+                    <li><strong>Reserved Instances:</strong> Purchase 1 or 3-year reservations for stable workloads</li>
+                    <li><strong>Spot Instances:</strong> Use for non-critical, interruptible workloads</li>
+                    <li><strong>Auto-shutdown:</strong> Configure auto-shutdown for dev/test VMs</li>
+                    <li><strong>Delete unused resources:</strong> Regularly audit and delete unattached disks, unused load balancers, etc.</li>
+                    <li><strong>Choose right storage tier:</strong> Use cool/archive tiers for infrequently accessed data</li>
+                    <li><strong>Monitor with Cost Management:</strong> Set budgets and alerts in Azure Cost Management</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- AZ-900 RESOURCE GLOSSARY -->
+        <section id="glossary">
+            <h2>AZ-900 Compute & Networking Resource Glossary</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Resource</th>
+                        <th>Category</th>
+                        <th>Description</th>
+                        <th>Use Cases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Virtual Machines</strong></td>
+                        <td>Compute (IaaS)</td>
+                        <td>Software emulation of physical computers, including OS and applications</td>
+                        <td>Lift-and-shift migrations, custom software, full control requirements</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VM Scale Sets</strong></td>
+                        <td>Compute (IaaS)</td>
+                        <td>Groups of identical, load-balanced VMs that auto-scale</td>
+                        <td>Stateless web tiers, auto-scaling applications</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Container Instances</strong></td>
+                        <td>Compute (PaaS)</td>
+                        <td>Simple, fast way to run containers without managing servers</td>
+                        <td>Simple container deployments, development/testing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Azure Functions</strong></td>
+                        <td>Compute (Serverless)</td>
+                        <td>Event-driven, serverless compute for small code pieces</td>
+                        <td>API backends, data processing, integrations, scheduled tasks</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Virtual Network</strong></td>
+                        <td>Networking</td>
+                        <td>Private network in Azure for resources to communicate</td>
+                        <td>Foundation for all Azure networking</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Subnets</strong></td>
+                        <td>Networking</td>
+                        <td>Segmentation of VNet for security and organization</td>
+                        <td>Separate web, app, and data tiers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Network Security Groups</strong></td>
+                        <td>Networking</td>
+                        <td>Software firewall filtering traffic to/from resources</td>
+                        <td>Securing subnets and NICs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Load Balancer</strong></td>
+                        <td>Networking</td>
+                        <td>Distributes traffic across resources for HA and performance</td>
+                        <td>Load balancing web servers, applications</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VPN Gateway</strong></td>
+                        <td>Networking</td>
+                        <td>Connects on-premises networks to Azure over the internet</td>
+                        <td>Hybrid cloud, remote access</td>
+                    </tr>
+                    <tr>
+                        <td><strong>ExpressRoute</strong></td>
+                        <td>Networking</td>
+                        <td>Private, dedicated connection to Azure (not over internet)</td>
+                        <td>Enterprise hybrid cloud, high-bandwidth needs, compliance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Azure DNS</strong></td>
+                        <td>Networking</td>
+                        <td>Domain name system hosting and resolution</td>
+                        <td>Custom domain names for Azure resources</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Azure Firewall</strong></td>
+                        <td>Networking</td>
+                        <td>Managed, cloud-based network security service</td>
+                        <td>Central network security, traffic inspection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Front Door</strong></td>
+                        <td>Networking</td>
+                        <td>Global load balancer and web application firewall</td>
+                        <td>Global applications, acceleration, WAF protection</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CDN</strong></td>
+                        <td>Networking</td>
+                        <td>Content Delivery Network for caching content globally</td>
+                        <td>Media streaming, static content delivery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VNet Peering</strong></td>
+                        <td>Networking</td>
+                        <td>Connects VNets privately over Microsoft backbone</td>
+                        <td>Hub-and-spoke topologies, multi-region architectures</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Azure Cloud Architecture Scenarios & Documentation Guide | Based on AZ-900 Curriculum</p>
+            <p>Page 1 of 1 | Prepared for Digital Transformation Projects | March 2026</p>
+            <p>© 2026 Azure Solutions Architecture. All scenarios are fictional and for educational purposes.</p>
+        </div>
+    </div>
+</body>
+</html>
